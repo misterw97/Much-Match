@@ -6,10 +6,12 @@ import VueAxios from "vue-axios";
 import vuetify from './plugins/vuetify';
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
+import VueApexCharts from 'vue-apexcharts'
 
 Vue.config.productionTip = false;
 
 Vue.use(VueAxios, axios);
+Vue.component('apexchart', VueApexCharts);
 
 new Vue({
   router,

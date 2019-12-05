@@ -105,6 +105,7 @@ export default {
   body {
     margin: 0;
     z-index: 0;
+    font-family: "IBM Plex Sans", sans-serif;
   }
 </style>
 
@@ -113,7 +114,6 @@ export default {
     display: flex;
 
     .swipe-view {
-      font-family: "Avenir", Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       color: #2c3e50;
@@ -123,6 +123,8 @@ export default {
 
     .analytics-view {
       width: calc(100% - 50vh);
+      height: 100vh;
+      overflow-y: auto;
     }
   }
 </style>
