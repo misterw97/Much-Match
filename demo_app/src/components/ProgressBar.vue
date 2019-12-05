@@ -47,6 +47,8 @@
         background: -webkit-linear-gradient(to left, #F37335, #FDC830); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to left, #F37335, #FDC830); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         height: 8px;
+        min-width: 8px;
+        max-width: 100%;
         border-radius: 5px;
       }
     }
