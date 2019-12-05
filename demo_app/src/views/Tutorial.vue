@@ -1,7 +1,7 @@
 <!-- freely inspired from: https://github.com/josephharveyangeles/kittynder/blob/master/LICENSE -->
 
 <template>
-  <div>
+  <div class="two-columns">
     <div class="swipe-view">
       <swipeable-cards
         v-bind:title="
@@ -12,7 +12,7 @@
         @reject="onreject"
       />
     </div>
-    <div class="analytics-view"></div>
+    <analytics class="analytics-view" />
   </div>
 </template>
 
@@ -20,10 +20,12 @@
 import SwipeableCards from "@/components/SwipeableCards.vue";
 import shuffle from "@/utils/shuffle";
 import router from "../router";
+import Analytics from "@/views/Analytics";
 
 export default {
   name: "swipe",
   components: {
+      Analytics,
     SwipeableCards
   },
   data() {
@@ -100,16 +102,27 @@ export default {
 </script>
 
 <style>
-body {
-  margin: 0;
-  z-index: 0;
-}
-div.swipe-view {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  width: 50vh;
-  position: relative;
-}
+  body {
+    margin: 0;
+    z-index: 0;
+  }
+</style>
+
+<style scoped lang="scss">
+  .two-columns {
+    display: flex;
+
+    .swipe-view {
+      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #2c3e50;
+      width: 50vh;
+      position: relative;
+    }
+
+    .analytics-view {
+      width: calc(100% - 50vh);
+    }
+  }
 </style>
