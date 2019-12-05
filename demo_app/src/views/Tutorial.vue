@@ -1,13 +1,18 @@
 <!-- freely inspired from: https://github.com/josephharveyangeles/kittynder/blob/master/LICENSE -->
 
 <template>
-  <div class="swipe-view">
-    <swipeable-cards
-      v-bind:title="this.currentIndex >= 0 ? this.cards[this.currentIndex].title : null"
-      v-bind:cards="cards"
-      @match="onmatch"
-      @reject="onreject"
-    />
+  <div>
+    <div class="swipe-view">
+      <swipeable-cards
+        v-bind:title="
+          this.currentIndex >= 0 ? this.cards[this.currentIndex].title : null
+        "
+        v-bind:cards="cards"
+        @match="onmatch"
+        @reject="onreject"
+      />
+    </div>
+    <div class="analytics-view"></div>
   </div>
 </template>
 
@@ -32,13 +37,14 @@ export default {
   methods: {
     onmatch(data) {
       data.liked = true;
-      this.next();
+      this.next(data);
     },
     onreject(data) {
       data.liked = false;
-      this.next();
+      this.next(data);
     },
-    next() {
+    next(data) {
+      console.log(data);
       this.currentIndex++;
     }
   },
@@ -76,7 +82,6 @@ export default {
       "mona.jpg",
       "naru.jpg",
       "ramdan.jpg",
-      "rikki-austin.jpg",
       "tucker.jpg",
       "uriel.jpg",
       "zoe.jpg"
@@ -104,5 +109,7 @@ div.swipe-view {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  width: 50vh;
+  position: relative;
 }
 </style>

@@ -2,10 +2,11 @@
 <template>
   <section class="container">
     <div class="fixed header accent">
-      <span>{{title || 'Swipe it!'}}</span>
+      <span>{{ title || "Swipe it!" }}</span>
     </div>
     <div
       v-if="current"
+      id="card--one--container"
       class="fixed fixed--center"
       style="z-index: 3"
       :class="{ transition: isVisible }"
@@ -25,7 +26,10 @@
         class="rounded-borders card card--one"
       >
         <div style="height: 100%">
-          <img :src="require(`../assets/images/${current.src}`)" class="rounded-borders" />
+          <img
+            :src="require(`../assets/images/${current.src}`)"
+            class="rounded-borders"
+          />
           <!-- <div class="text">
             <h2>
               {{current.name}},
@@ -35,9 +39,16 @@
         </div>
       </Vue2InteractDraggable>
     </div>
-    <div v-if="next" class="rounded-borders card card--two fixed fixed--center" style="z-index: 2">
+    <div
+      v-if="next"
+      class="rounded-borders card card--two fixed fixed--center"
+      style="z-index: 2"
+    >
       <div style="height: 100%">
-        <img :src="require(`../assets/images/${next.src}`)" class="rounded-borders" />
+        <img
+          :src="require(`../assets/images/${next.src}`)"
+          class="rounded-borders"
+        />
         <!-- <div class="text">
           <h2>
             {{ next.name }},
@@ -64,21 +75,27 @@
 
     <v-dialog v-model="helpDialog" width="500">
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>Heyy!</v-card-title>
+        <v-card-title class="headline grey lighten-2" primary-title
+          >Heyy!</v-card-title
+        >
 
         <v-card-text>
-          <br />The idea here is to collect data on swiping features... therefore you should not use the buttons to indicate your preference!
+          <br />The idea here is to collect data on swiping features...
+          therefore you should not use the buttons to indicate your preference!
           <br />
           <br />
-          You {{helpLiked ? 'liked' : 'didn\'t like' }} this picture?
-          Just press your finger on the card and drag it to the {{helpLiked ? 'right' : 'left'}} of your screen until it disappears.
+          You {{ helpLiked ? "liked" : "didn't like" }} this picture? Just press
+          your finger on the card and drag it to the
+          {{ helpLiked ? "right" : "left" }} of your screen until it disappears.
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="helpDialog = false">Let's swipe!</v-btn>
+          <v-btn color="primary" text @click="helpDialog = false"
+            >Let's swipe!</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -313,7 +330,7 @@ export default {
 }
 
 .fixed {
-  position: fixed;
+  position: absolute;
   &--center {
     left: 50%;
     top: 50%;
@@ -323,9 +340,17 @@ export default {
 .rounded-borders {
   border-radius: 12px;
 }
+#card--one--container {
+  width: 78%;
+  height: 60%;
+  .card {
+    width: 100%;
+    height: 100%;
+  }
+}
 .card {
-  width: 80vw;
-  height: 60vh;
+  width: 78%;
+  height: 60%;
   max-width: 500px;
   max-height: 200vw;
   color: white;
