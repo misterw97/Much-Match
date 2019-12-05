@@ -86,10 +86,13 @@
       <div style="height: 100%"></div>
     </div>
     <div class="footer fixed">
-      <div class="btn primary--text btn--decline" @click="openhelper(false)">
+      <div class="btn primary--text btn--decline">
         <i class="material-icons">close</i>
       </div>
-      <div class="btn primary btn--like" @click="openhelper(true)">
+      <div class="btn primary--text btn--decline">
+        <i class="material-icons">shopping_basket</i>
+      </div>
+      <div class="btn primary btn--like">
         <i class="material-icons">favorite</i>
       </div>
     </div>
