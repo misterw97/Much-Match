@@ -238,6 +238,7 @@ export default {
   background: #eceff1;
   width: 100%;
   height: 100vh;
+  position: relative;
 }
 
 .header {
@@ -268,7 +269,7 @@ export default {
 }
 
 .footer {
-  width: 77vw;
+  width: 100%;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
