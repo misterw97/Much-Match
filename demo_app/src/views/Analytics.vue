@@ -54,6 +54,9 @@
                     dataLabels: {
                         enabled: false
                     },
+                    legend: {
+                        show: false,
+                    },
                     stroke: {
                         curve: 'straight'
                     },
