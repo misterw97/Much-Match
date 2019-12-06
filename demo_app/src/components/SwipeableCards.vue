@@ -213,7 +213,7 @@
                     duration: endTime - this.swipeRelativeData.startTime
                 };
                 this.$emit(event, {...meta, ...this.swipeData});
-                // console.log(this.swipeData);
+                EventBus.$emit('swipe-event', event);
                 this.swipeData = {
                     rawX: [],
                     rawTimestamps: [],

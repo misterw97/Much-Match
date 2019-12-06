@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-container">
     <div class="cache"></div>
     <h1>Analytics</h1>
     <img :src="require('../assets/logo_cut.png')" class="logo">
@@ -36,6 +36,7 @@
     import ProgressBar from "@/components/ProgressBar";
     import NormalDistributionBar from "@/components/NormalDistributionBar";
 
+    import {InteractEventBus} from "vue2-interact";
     import {EventBus} from "@/event-bus";
 
     export default {
@@ -44,7 +45,7 @@
         data() {
             return {
                 timestamp: 0,
-                swipeData: [],
+                swipes: {},
                 series: [{
                     name: 'time',
                     data: [],
@@ -134,26 +135,28 @@
             }
         },
         mounted() {
+            EventBus.$on('swipe-event', () => this.swipes = {});
             EventBus.$on('swipe-data', data => {
-                const x = data.timeStamp - data.t0;
+                const swipeId = data.t0;
+                const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
-                if (this.timestamp !== data.t0) {
-                    this.timestamp = data.t0;
-                    this.swipeData = [];
+                if (!this.swipes[swipeId]) {
+                    this.swipes[swipeId] = [];
                 }
+                const currentSwipe = this.swipes[swipeId];
+                currentSwipe.push({x, y});
 
-                this.swipeData.push({x, y});
 
-                this.$refs.chart.updateSeries([{
-                    data: this.swipeData
-                }])
+                this.$refs.chart.updateSeries([
+                    ...Object.values(this.swipes).map(swipe => ({data: swipe}))
+                ])
             });
         }
     }
 </script>
 
 <style scoped lang="scss">
-  .container {
+  .main-container {
     z-index: 4;
     background-color: black;
     color: white;
