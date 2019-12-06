@@ -10,8 +10,7 @@
         <normal-distribution-bar value="20"/>
       </div>
       <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="40"/>
+        <normal-distribution-bar title="je ne sais pas" description="c'est genant de pas savoir ce que tu fais roger" value="40"/>
       </div>
       <div class="gauge">
         <span>credibility</span>
