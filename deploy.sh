@@ -28,6 +28,7 @@ if [ $rep -eq 1 ]
 then
     echo "Re-building frontend"
     ./build_frontend.sh
+    ./build_demo.sh
 fi
 
 cd lb3_backend
