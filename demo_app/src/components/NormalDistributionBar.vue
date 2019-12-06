@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="main-progress-bar-container">
     <progress-bar :percent="value"/>
     <div class="average-bar"></div>
   </div>
@@ -19,7 +19,7 @@
   $bar-width: 2px;
   $bar-extra-height: 4px;
 
-  .main-container {
+  .main-progress-bar-container {
     position: relative;
     margin: $bar-extra-height 0;
 
