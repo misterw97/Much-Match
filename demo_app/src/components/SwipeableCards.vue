@@ -331,7 +331,7 @@
     }
 
     .bottom-border {
-      border-bottom: 1px solid black;
+      box-shadow: 0 0 4px 0 black;
     }
 
 

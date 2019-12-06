@@ -3,10 +3,28 @@
     <div class="cache"></div>
     <h1>Analytics</h1>
     <img :src="require('../assets/logo_cut.png')" class="logo">
-    <apexchart class="chart" width="100%" type="area" :options="options" :series="series"/>
-    <div class="gauge">
-      credibility
-      <normal-distribution-bar value="60" />
+    <apexchart class="chart" :options="options" :series="series"/>
+    <div class="features">
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="60"/>
+      </div>
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="60"/>
+      </div>
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="60"/>
+      </div>
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="60"/>
+      </div>
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="60"/>
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +32,7 @@
 <script>
     import ProgressBar from "@/components/ProgressBar";
     import NormalDistributionBar from "@/components/NormalDistributionBar";
+
     export default {
         name: "Analytics",
         components: {NormalDistributionBar, ProgressBar},
@@ -131,13 +150,12 @@
                         toolbar: {
                             show: false,
                         },
-                        width: '100%',
-                        type: 'line',
-                        height: '100px',
+                        height: '200px',
+                        type: 'area',
                     },
                     colors: ['#ff6900'],
                     title: {
-                        text: 'Titre du truc',
+                        text: 'Swipe progress',
                         align: 'left',
                         style: {
                             fontSize: '14px'
@@ -229,7 +247,24 @@
     }
 
     .chart {
-      height: 300px;
+      /*width: 50%;*/
+      height: 200px;
+      max-height: 200px;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+
+      $gauge-separation: 15px;
+
+      .gauge {
+        width: calc(50% - #{$gauge-separation});
+
+        &:nth-child(even) {
+          margin-left: 2 * $gauge-separation;
+        }
+      }
     }
   }
 </style>
