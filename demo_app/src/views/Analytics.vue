@@ -7,7 +7,11 @@
     <div class="features">
       <div class="gauge">
         <span>credibility</span>
-        <normal-distribution-bar value="60"/>
+        <normal-distribution-bar value="20"/>
+      </div>
+      <div class="gauge">
+        <span>credibility</span>
+        <normal-distribution-bar value="40"/>
       </div>
       <div class="gauge">
         <span>credibility</span>
@@ -15,15 +19,11 @@
       </div>
       <div class="gauge">
         <span>credibility</span>
-        <normal-distribution-bar value="60"/>
+        <normal-distribution-bar value="80"/>
       </div>
       <div class="gauge">
         <span>credibility</span>
-        <normal-distribution-bar value="60"/>
-      </div>
-      <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="60"/>
+        <normal-distribution-bar value="70"/>
       </div>
     </div>
   </div>
@@ -247,7 +247,7 @@
     }
 
     .chart {
-      /*width: 50%;*/
+      width: 50%;
       height: 200px;
       max-height: 200px;
     }
