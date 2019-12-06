@@ -42,7 +42,6 @@
         components: {NormalDistributionBar, ProgressBar},
         data() {
             return {
-                timestamp: 0,
                 swipes: {},
                 series: [{
                     name: 'time',
@@ -96,11 +95,18 @@
                         },
                         axisTicks: {
                             show: false
+                        },
+                        title: {
+                            text: 'time',
+                            offsetY: -30
                         }
                     },
                     yaxis: {
                         tickAmount: 4,
                         floating: false,
+                        title: {
+                           text: 'x movement'
+                        },
                         seriesName: 'x movement',
                         labels: {
                             style: {
@@ -142,7 +148,7 @@
                 const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
                 if (Object.keys(this.swipes).length === 0)
-                    this.swipes[0] = [{x: x + 4000, y: 0}];
+                    this.swipes[0] = [{x: x + 2000, y: 0}];
 
                 if (!this.swipes[swipeId])
                     this.swipes[swipeId] = [];
