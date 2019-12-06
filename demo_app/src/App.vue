@@ -22,3 +22,8 @@ export default Vue.extend({
   }
 });
 </script>
+<style>
+  .v-application {
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+</style>
