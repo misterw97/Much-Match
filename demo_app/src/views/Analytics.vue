@@ -35,8 +35,6 @@
 <script>
     import ProgressBar from "@/components/ProgressBar";
     import NormalDistributionBar from "@/components/NormalDistributionBar";
-
-    import {InteractEventBus} from "vue2-interact";
     import {EventBus} from "@/event-bus";
 
     export default {
@@ -143,12 +141,14 @@
                 const swipeId = data.t0;
                 const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
-                if (!this.swipes[swipeId]) {
+                if (Object.keys(this.swipes).length === 0)
+                    this.swipes[0] = [{x: x + 4000, y: 0}];
+
+                if (!this.swipes[swipeId])
                     this.swipes[swipeId] = [];
-                }
+
                 const currentSwipe = this.swipes[swipeId];
                 currentSwipe.push({x, y});
-
 
                 this.$refs.chart.updateSeries([
                     ...Object.values(this.swipes).map(swipe => ({data: swipe}))
