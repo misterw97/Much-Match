@@ -9,9 +9,12 @@
         <div class="right">
           <div class="has-badge">
             <img :src="require('../assets/heart.svg')">
-            <span class="badge primary" v-if="true">1</span>
+            <span class="badge primary" v-if="likes>0">{{likes}}</span>
           </div>
-          <img :src="require('../assets/bag.svg')">
+          <div class="has-badge">
+            <img :src="require('../assets/bag.svg')">
+            <span class="badge primary" v-if="cart>0">{{cart}}</span>
+          </div>
         </div>
       </div>
       <div class="header-row">
@@ -42,7 +45,7 @@
         interact-block-drag-down
         @onmove="console"
         @draggedRight="emitAndNext('match')"
-        @draggedUp="emitAndNext('match')"
+        @draggedUp="emitAndNext('cart')"
         @draggedLeft="emitAndNext('reject')"
         class="rounded-borders card card--one"
       >
@@ -143,6 +146,8 @@
         props: ["cards", "title"], // {src, name, age}
         data() {
             return {
+                cart: 0,
+                likes: 0,
                 isVisible: true,
                 index: 0,
                 interactEventBus: {
@@ -212,6 +217,15 @@
                     appHeight: this.window.height,
                     duration: endTime - this.swipeRelativeData.startTime
                 };
+                switch (event) {
+                    case 'cart':
+                        this.cart++;
+                        event = 'match';
+                        break;
+                    case 'match':
+                        this.likes++;
+                        break;
+                }
                 this.$emit(event, {...meta, ...this.swipeData});
                 EventBus.$emit('swipe-event', event);
                 this.swipeData = {
