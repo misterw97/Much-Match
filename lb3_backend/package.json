@@ -21,6 +21,7 @@
     "loopback-component-explorer": "^6.2.0",
     "loopback-connector-cloudant": "^2.3.2",
     "serve-favicon": "^2.0.1",
+    "socketio": "^1.0.0",
     "strong-error-handler": "^3.0.0"
   },
   "devDependencies": {
