@@ -129,6 +129,7 @@
 </template>
 <script>
     import {InteractEventBus, Vue2InteractDraggable} from "vue2-interact";
+    import {EventBus} from '../event-bus.js';
 
     const EVENTS = {
         MATCH: "match",
@@ -237,6 +238,7 @@
             console(data) {
                 // eslint-disable-next-line no-console
                 // console.log(data);
+                EventBus.$emit('swipe-data', data);
 
                 this.swipeRelativeData.lastX += data.dx;
                 this.swipeRelativeData.lastY += data.dy;

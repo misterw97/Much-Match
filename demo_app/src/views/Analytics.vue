@@ -3,7 +3,7 @@
     <div class="cache"></div>
     <h1>Analytics</h1>
     <img :src="require('../assets/logo_cut.png')" class="logo">
-    <apexchart class="chart" :options="options" :series="series"/>
+    <apexchart ref="chart" class="chart" :options="options" :series="series"/>
     <div class="features">
       <div class="gauge">
         <span>credibility</span>
@@ -26,6 +26,9 @@
         <normal-distribution-bar value="70"/>
       </div>
     </div>
+    <ul>
+      <li v-for="a in series[0].data">{{a.x}} = {{a.y}}</li>
+    </ul>
   </div>
 </template>
 
@@ -33,95 +36,18 @@
     import ProgressBar from "@/components/ProgressBar";
     import NormalDistributionBar from "@/components/NormalDistributionBar";
 
+    import {EventBus} from "@/event-bus";
+
     export default {
         name: "Analytics",
         components: {NormalDistributionBar, ProgressBar},
         data() {
             return {
+                timestamp: 0,
+                swipeData: [],
                 series: [{
                     name: 'time',
-                    data: [
-                        {
-                            x: 1996,
-                            y: 162
-                        },
-                        {
-                            x: 1997,
-                            y: 90
-                        },
-                        {
-                            x: 1998,
-                            y: 50
-                        },
-                        {
-                            x: 1999,
-                            y: 77
-                        },
-                        {
-                            x: 2000,
-                            y: 35
-                        },
-                        {
-                            x: 2001,
-                            y: -45
-                        },
-                        {
-                            x: 2002,
-                            y: -88
-                        },
-                        {
-                            x: 2003,
-                            y: -120
-                        },
-                        {
-                            x: 2004,
-                            y: -156
-                        },
-                        {
-                            x: 2005,
-                            y: -123
-                        },
-                        {
-                            x: 2006,
-                            y: -88
-                        },
-                        {
-                            x: 2007,
-                            y: -66
-                        },
-                        {
-                            x: 2008,
-                            y: -45
-                        },
-                        {
-                            x: 2009,
-                            y: -29
-                        },
-                        {
-                            x: 2010,
-                            y: -45
-                        },
-                        {
-                            x: 2011,
-                            y: -88
-                        },
-                        {
-                            x: 2012,
-                            y: -132
-                        },
-                        {
-                            x: 2013,
-                            y: -146
-                        },
-                        {
-                            x: 2014,
-                            y: -169
-                        },
-                        {
-                            x: 2015,
-                            y: -184
-                        }
-                    ]
+                    data: [],
                 }],
                 options: {
                     dataLabels: {
@@ -193,13 +119,6 @@
                     },
                     tooltip: {
                         enabled: false,
-                        x: {
-                            format: "yyyy",
-                        },
-                        fixed: {
-                            enabled: false,
-                            position: 'topRight'
-                        }
                     },
                     grid: {
                         yaxis: {
@@ -213,6 +132,22 @@
                     },
                 }
             }
+        },
+        mounted() {
+            EventBus.$on('swipe-data', data => {
+                const x = data.timeStamp - data.t0;
+                const y = data.clientX - data.clientX0;
+                if (this.timestamp !== data.t0) {
+                    this.timestamp = data.t0;
+                    this.swipeData = [];
+                }
+
+                this.swipeData.push({x, y});
+
+                this.$refs.chart.updateSeries([{
+                    data: this.swipeData
+                }])
+            });
         }
     }
 </script>
