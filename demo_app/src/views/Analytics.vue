@@ -2,19 +2,21 @@
   <div class="container">
     <div class="cache"></div>
     <h1>Analytics</h1>
+    <img :src="require('../assets/logo_cut.png')" class="logo">
     <apexchart class="chart" width="100%" type="area" :options="options" :series="series"/>
     <div class="gauge">
       credibility
-      <progress-bar percent="60" />
+      <normal-distribution-bar value="60" />
     </div>
   </div>
 </template>
 
 <script>
     import ProgressBar from "@/components/ProgressBar";
+    import NormalDistributionBar from "@/components/NormalDistributionBar";
     export default {
         name: "Analytics",
-        components: {ProgressBar},
+        components: {NormalDistributionBar, ProgressBar},
         data() {
             return {
                 series: [{
@@ -216,6 +218,14 @@
       z-index: 999;
       top: -20px;
       background-color: black;
+    }
+
+    .logo {
+      max-width: 200px;
+      position: absolute;
+      top: 10px;
+      z-index: 1020;
+      right: 20px;
     }
 
     .chart {
