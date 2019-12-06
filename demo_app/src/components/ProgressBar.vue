@@ -50,6 +50,7 @@
         min-width: 8px;
         max-width: 100%;
         border-radius: 5px;
+        transition: width 1s;
       }
     }
   }
