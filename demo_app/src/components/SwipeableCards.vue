@@ -18,7 +18,7 @@
         <div class="left">
           <img :src="require('../assets/filled-menu.svg')" class="disabled-filter">
           <img :src="require('../assets/filled-square.svg')" class="disabled-filter">
-          <img :src="require('../assets/favicon.png')">
+          <img :src="require('../assets/swipe.svg')" class="swipe-icon">
         </div>
         <div class="right">
           <span class="bold">FILTER</span>
@@ -301,6 +301,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 14px 20px;
+
+      .swipe-icon {
+        width: 29px;
+      }
 
       img {
         width: 20px;

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="cache"></div>
     <h1>Analytics</h1>
-    <apexchart width="100%" type="area" :options="options" :series="series"/>
+    <apexchart class="chart" width="100%" type="area" :options="options" :series="series"/>
     <div class="gauge">
       credibility
       <progress-bar percent="60" />
@@ -130,6 +130,8 @@
                             show: false,
                         },
                         width: '100%',
+                        type: 'line',
+                        height: '100px',
                     },
                     colors: ['#ff6900'],
                     title: {
@@ -214,6 +216,10 @@
       z-index: 999;
       top: -20px;
       background-color: black;
+    }
+
+    .chart {
+      height: 300px;
     }
   }
 </style>
