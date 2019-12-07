@@ -56,7 +56,7 @@ export default class Analytics extends Vue {
   protected gauges: { name: string; config: GaugeData }[] = GAUGES;
 
   protected renderData(data: any) {
-    this.swipe = undefined;
+    this.swipe = {} as SwipeExtended;
     this.rogerCounter++;
     const swipeId = data.t0;
     const x = data.timeStamp;

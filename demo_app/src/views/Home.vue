@@ -37,7 +37,6 @@ export default class Home extends Swiping {
   }
 
   mounted() {
-    super.mounted();
     this.$socket.client.emit('getNewCode');
   }
 }
