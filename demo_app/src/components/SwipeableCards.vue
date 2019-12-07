@@ -215,7 +215,7 @@
                 } else {
                     const userInput = prompt('Enter code');
                     const serverRoomId = parseInt(userInput);
-                    this.$socket.emit('joinRoom', serverRoomId);
+                    this.$socket.client.emit('joinRoom', serverRoomId);
                     this.serverRoomId = serverRoomId;
                 }
 
@@ -256,7 +256,7 @@
                 };
                 const swipeData = {...meta, ...this.swipeData};
                 if (this.serverRoomId)
-                    this.$socket.emit('swipe_event', {to: this.serverRoomId, data: swipeData});
+                    this.$socket.client.emit('swipe_event', {to: this.serverRoomId, data: swipeData});
                 this.countCartLikes(event);
                 this.$emit(event, swipeData);
                 EventBus.$emit('swipe-event', swipeData);
@@ -287,7 +287,7 @@
                 EventBus.$emit('swipe-data', data);
                 this.rogerCounter++;
                 if (this.serverRoomId && this.rogerCounter % 3 === 0) {
-                    this.$socket.emit('swipe_data', {
+                    this.$socket.client.emit('swipe_data', {
                         to: this.serverRoomId,
                         data: {
                             t0: data.t0,
