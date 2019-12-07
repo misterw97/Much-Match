@@ -92,11 +92,7 @@
                         },
                         seriesName: 'x movement',
                         labels: {
-                            style: {
-                                color: '#8e8da4',
-                            },
-                            offsetY: -7,
-                            offsetX: 0,
+                            show: false
                         },
                         axisBorder: {
                             show: false,
