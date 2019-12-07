@@ -5,29 +5,12 @@
     <img :src="require('../assets/logo_cut.png')" class="logo">
     <apexchart ref="chart" class="chart" :options="options" :series="series"/>
     <div class="features">
-      <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="20"/>
-      </div>
-      <div class="gauge">
-        <normal-distribution-bar title="je ne sais pas" description="c'est genant de pas savoir ce que tu fais roger" value="40"/>
-      </div>
-      <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="60"/>
-      </div>
-      <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="80"/>
-      </div>
-      <div class="gauge">
-        <span>credibility</span>
-        <normal-distribution-bar value="70"/>
-      </div>
+        <normal-distribution-bar  v-for="gauge in gauges" 
+            :key="gauge.name" 
+            :title="gauge.description"
+            :description="gauge.description"
+            :value="swipe ? swipe[gauge.label] : 0" />
     </div>
-    <ul>
-      <li v-for="a in series[0].data">{{a.x}} = {{a.y}}</li>
-    </ul>
   </div>
 </template>
 
@@ -35,12 +18,14 @@
     import ProgressBar from "@/components/ProgressBar";
     import NormalDistributionBar from "@/components/NormalDistributionBar";
     import {EventBus} from "@/event-bus";
+    import extend from "@/utils/extend_features";
 
     export default {
         name: "Analytics",
         components: {NormalDistributionBar, ProgressBar},
         data() {
             return {
+                swipe: undefined,
                 swipes: {},
                 series: [{
                     name: 'time',
@@ -137,12 +122,20 @@
                             left: 20
                         }
                     },
-                }
+                },
+                gauges: [{
+                    name: "speedMean",
+                    label: "Determination"
+                }]
             }
         },
         mounted() {
+            const catchSwipe = swipe => this.swipe = extend(swipe);
+            EventBus.$on('match', catchSwipe);
+            EventBus.$on('reject', catchSwipe);
             EventBus.$on('swipe-event', () => this.swipes = {});
             EventBus.$on('swipe-data', data => {
+                this.swipe = undefined;
                 const swipeId = data.t0;
                 const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
