@@ -13,13 +13,16 @@
   </div>
 </template>
 
-<script>
-    import ProgressBar from "./ProgressBar";
+<script lang="ts">
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import ProgressBar from "./ProgressBar.vue";
 
-    export default {
-        name: "NormalDistributionBar",
-        components: {ProgressBar},
-        props: ['value', 'mean', 'std', 'title', 'description']
+    @Component({
+      components: {ProgressBar},
+      props: ['value', 'mean', 'std', 'title', 'description']
+    })
+    export default class Gauge extends Vue {
+
     }
 </script>
 

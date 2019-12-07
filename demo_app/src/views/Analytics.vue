@@ -5,24 +5,24 @@
     <img :src="require('../assets/logo_cut.png')" class="logo">
     <apexchart ref="chart" class="chart" :options="options" :series="series"/>
     <div class="features">
-        <normal-distribution-bar  v-for="gauge in gauges" 
+        <gauge class="gauge"
+            v-for="gauge in gauges" 
             :key="gauge.name" 
-            :title="gauge.description"
+            :title="gauge.label"
             :description="gauge.description"
-            :value="swipe ? swipe[gauge.label] : 0" />
+            :value="!!swipe ? swipe[gauge.label] : 0" />
     </div>
   </div>
 </template>
 
 <script>
-    import ProgressBar from "@/components/ProgressBar";
-    import NormalDistributionBar from "@/components/NormalDistributionBar";
-    import {EventBus} from "@/event-bus";
+    import Gauge from "@/components/Gauge";
+    import { EventBus } from "@/event-bus";
     import extend from "@/utils/extend_features";
 
     export default {
         name: "Analytics",
-        components: {NormalDistributionBar, ProgressBar},
+        components: {Gauge},
         data() {
             return {
                 swipe: undefined,
@@ -125,7 +125,8 @@
                 },
                 gauges: [{
                     name: "speedMean",
-                    label: "Determination"
+                    label: "Determination",
+                    description: "Average swiping speed"
                 }]
             }
         },
