@@ -146,7 +146,7 @@
     export default {
         name: "SwipeableCards",
         components: {Vue2InteractDraggable},
-        props: ["cards", "title"], // {src, name, age}
+        props: ["cards"], // {src, name, age}
         data() {
             return {
                 roomId: null,
