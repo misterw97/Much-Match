@@ -245,6 +245,7 @@
                 InteractEventBus.$emit(EVENTS.SKIP);
             },
             emitAndNext(event) {
+                this.rogerCounter = -1;
                 const endTime = new Date().getTime();
                 const meta = {
                     image: this.cards[this.index].id,
@@ -285,7 +286,7 @@
                 // console.log(data);
                 EventBus.$emit('swipe-data', data);
                 this.rogerCounter++;
-                if (this.serverRoomId && this.rogerCounter % 10 === 0) {
+                if (this.serverRoomId && this.rogerCounter % 3 === 0) {
                     this.$socket.emit('swipe_data', {
                         to: this.serverRoomId,
                         data: {
