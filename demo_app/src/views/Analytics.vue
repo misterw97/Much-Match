@@ -168,18 +168,17 @@
                             std: 1,
                         }
                     },
-                },
-                // {
-                //     name: "TODO",
-                //     config: {
-                //         title: "Hesitation",
-                //         description: "Time with swiping speed at zero",
-                //         rangeStd: {
-                //             mean: 0,
-                //             std: 0,
-                //         }
-                //     },
-                // }
+                }, {
+                    name: "hesitation",
+                    config: {
+                        title: "Hesitation",
+                        description: "Time with swiping speed at zero",
+                        rangeStd: {
+                            mean: 0,
+                            std: 0,
+                        }
+                    },
+                }
                 ]
             }
         },
