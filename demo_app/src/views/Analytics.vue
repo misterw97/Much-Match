@@ -144,8 +144,8 @@
                         title: "Intensity",
                         description: "Average acceleration",
                         rangeStd: {
-                            mean: 0,
-                            std: 1,
+                            mean: 11.725722,
+                            std: 174.36487,
                         }
                     },
                 }, {
@@ -154,8 +154,8 @@
                         title: "Reactivity",
                         description: "Time spent on card before swiping",
                         rangeStd: {
-                            mean: 0,
-                            std: 1,
+                            mean: 7476.705882,
+                            std: 163453.821581,
                         }
                     },
                 }, {
@@ -164,8 +164,8 @@
                         title: "Insistence",
                         description: "Swipe trajectory length",
                         rangeStd: {
-                            mean: 0,
-                            std: 1,
+                            mean: 0.694734,
+                            std: 0.379383,
                         }
                     },
                 }, {
@@ -175,7 +175,7 @@
                         description: "Time with swiping speed at zero",
                         rangeStd: {
                             mean: 0,
-                            std: 0,
+                            std: 1,
                         }
                     },
                 }
