@@ -60,8 +60,8 @@ export const GAUGES = [
       title: "Hesitation",
       description: "Time with swiping speed at zero",
       rangeStd: {
-        mean: 0,
-        std: 1
+        mean: 4.824155,
+        std: 8.624324
       }
     }
   }
