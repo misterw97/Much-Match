@@ -227,8 +227,9 @@
                         this.likes++;
                         break;
                 }
-                this.$emit(event, {...meta, ...this.swipeData});
-                EventBus.$emit('swipe-event', event);
+                const swipeData = {...meta, ...this.swipeData};
+                this.$emit(event, swipeData);
+                EventBus.$emit('swipe-event', swipeData);
                 this.swipeData = {
                     rawX: [],
                     rawTimestamps: [],

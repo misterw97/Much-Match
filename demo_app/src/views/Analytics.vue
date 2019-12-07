@@ -7,10 +7,9 @@
     <div class="features">
         <gauge class="gauge"
             v-for="gauge in gauges" 
-            :key="gauge.name" 
-            :title="gauge.label"
-            :description="gauge.description"
-            :value="!!swipe ? swipe[gauge.label] : 0" />
+            :key="gauge.name+(swipe?swipe.id:'')"
+            :config="gauge.config"
+            :value="!!swipe ? swipe[gauge.name] : 0" />
     </div>
   </div>
 </template>
@@ -125,16 +124,19 @@
                 },
                 gauges: [{
                     name: "speedMean",
-                    label: "Determination",
-                    description: "Average swiping speed"
+                    config: {
+                        title: "Determination",
+                        description: "Average swiping speed",
+                    },
                 }]
             }
         },
         mounted() {
-            const catchSwipe = swipe => this.swipe = extend(swipe);
-            EventBus.$on('match', catchSwipe);
-            EventBus.$on('reject', catchSwipe);
-            EventBus.$on('swipe-event', () => this.swipes = {});
+            EventBus.$on('swipe-event', swipeData => {
+                this.swipe = extend(swipeData);
+                console.log(this.swipe["speedMean"]);
+                this.swipes = {};
+            });
             EventBus.$on('swipe-data', data => {
                 this.swipe = undefined;
                 const swipeId = data.t0;
