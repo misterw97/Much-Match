@@ -136,7 +136,7 @@
 
     const EVENTS = {
         MATCH: "match",
-        SKIP: "skip",
+        SUPER: "super",
         REJECT: "reject"
     };
 
@@ -152,7 +152,8 @@
                 index: 0,
                 interactEventBus: {
                     draggedRight: EVENTS.MATCH,
-                    draggedLeft: EVENTS.REJECT
+                    draggedLeft: EVENTS.REJECT,
+                    draggedUp: EVENTS.SUPER
                 },
                 swipeData: {
                     rawX: [],
