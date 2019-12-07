@@ -1,11 +1,7 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
-      <swipeable-cards
-        v-bind:title="
-          this.currentIndex >= 0 ? this.cards[this.currentIndex].title : null
-        "
-        v-bind:cards="cards"
+      <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
       />

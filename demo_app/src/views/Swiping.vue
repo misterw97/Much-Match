@@ -3,8 +3,7 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
-      <swipeable-cards
-        v-bind:cards="cards"
+      <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
       />
@@ -29,7 +28,7 @@ import Analytics from "@/views/Analytics.vue";
 })
 export default class Swipe extends Vue {
   protected cards: CardData[] = [];
-  protected currentIndex: number = -1;
+  private currentIndex = 0;
 
   protected onmatch(data: ISwipe) {
     data.liked = true;
@@ -42,7 +41,7 @@ export default class Swipe extends Vue {
   }
 
   protected next(data: ISwipe & { liked: boolean }) {
-    this.currentIndex++;
+    this.cards.push(this.cards[this.currentIndex++]);
   }
 
   protected beforeMount() {
@@ -62,7 +61,6 @@ export default class Swipe extends Vue {
       "zoe.jpg"
     ]);
     this.cards = catsImages.map(src => ({ src }));
-    this.currentIndex = 0;
   }
 }
 </script>
