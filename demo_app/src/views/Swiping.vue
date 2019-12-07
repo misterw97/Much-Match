@@ -15,63 +15,41 @@
   </div>
 </template>
 
-<script>
-import SwipeableCards from "@/components/SwipeableCards.vue";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import CardData from "@/models/CardData";
+import ISwipe from "@/models/Swipe";
 import shuffle from "@/utils/shuffle";
-import router from "../router";
-import Analytics from "@/views/Analytics";
+import SwipeableCards from "@/components/SwipeableCards.vue";
+import Analytics from "@/views/Analytics.vue";
 
-export default {
+@Component({
   name: "swipe",
   components: {
     Analytics,
     SwipeableCards
-  },
-  data() {
-    return {
-      cards: [],
-      currentIndex: -1,
-      dialog: false,
-      expected: false
-    };
-  },
-  methods: {
-    onmatch(data) {
-      data.liked = true;
-      this.next(data);
-    },
-    onreject(data) {
-      data.liked = false;
-      this.next(data);
-    },
-    next(data) {
-      this.currentIndex++;
-    }
-  },
-  mounted() {
-    let cards = [
-      {
-        expectLike: true,
-        title: "Swipe it right!"
-      },
-      {
-        expectLike: false,
-        title: "Swipe it left!"
-      },
-      {
-        expectLike: false,
-        title: "Don't like it!"
-      },
-      {
-        expectLike: true,
-        title: "Like it!"
-      },
-      {
-        expectLike: true,
-        title: "Love it!"
-      }
-    ];
-    let catsImages = [
+  }
+})
+export default class Swipe extends Vue {
+  protected cards: CardData[] = [];
+  protected currentIndex: number = -1;
+
+  protected onmatch(data: ISwipe) {
+    data.liked = true;
+    this.next(data);
+  }
+
+  protected onreject(data: ISwipe) {
+    data.liked = false;
+    this.next(data);
+  }
+
+  protected next(data: ISwipe & { liked: boolean }) {
+    this.currentIndex++;
+  }
+
+  protected mounted() {
+    const catsImages = shuffle([
       "alexander.jpg",
       "bona.jpg",
       "ichi.jpg",
@@ -85,18 +63,11 @@ export default {
       "tucker.jpg",
       "uriel.jpg",
       "zoe.jpg"
-    ];
-    catsImages = shuffle(catsImages);
-    for (let i = 0; i < cards.length; ++i) {
-      cards[i].src = catsImages[i];
-      const catName = catsImages[i].split(".")[0];
-      const title = catName.charAt(0).toUpperCase() + catName.slice(1);
-      cards[i].title = title;
-    }
-    this.cards = cards;
+    ]);
+    this.cards = catsImages.map(src => ({ src }));
     this.currentIndex = 0;
   }
-};
+}
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Tutorial from "@/views/Tutorial.vue";
+import Home from "@/views/Home.vue";
 import Swiping from "@/views/Swiping.vue";
 
 Vue.use(VueRouter);
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "tutorial",
-    component: Tutorial,
+    component: Home,
     meta: {
       title: "MuchMatch demo"
     }

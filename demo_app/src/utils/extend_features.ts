@@ -1,23 +1,5 @@
-interface Swipe {
-    image: string,
-    appWidth: number,
-    appHeight: number,
-    duration: number,
-    rawX: number[],
-    rawTimestamps: number[],
-    rawTime: number[],
-    rawY: number[],
-    rawSpeedX: number[],
-    rawSpeedY: number[],
-    rawSpeed: number[],
-    liked: boolean
-}
-
-interface SwipeExtended extends Swipe {
-    speedMean: number,
-    speedMax: number,
-    accMean: number
-}
+import Swipe from '@/models/Swipe';
+import SwipeExtended from '@/models/SwipeExtended';
 
 const sumArray = (array: number[]) => {
     return array.reduce((acc, val) => acc + val, 0);
