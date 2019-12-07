@@ -15,29 +15,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
 import SwipeableCards from "@/components/SwipeableCards.vue";
 import Swiping from "@/views/Swiping.vue";
 import Analytics from "@/views/Analytics.vue";
+import {Socket} from "vue-socket.io-extended";
 
 @Component({
   components: {
     Analytics,
-    SwipeableCards
-  },
-  sockets: {
-      receiveNewCode(code) {
-          this.roomId = code;
-      },
+    SwipeableCards,
   }
 })
 export default class Home extends Swiping {
 
   protected roomId?: number;
 
+  @Socket()
+  receiveNewCode(code: number) {
+      this.roomId = code;
+  }
+
   mounted() {
     super.mounted();
-    this.$socket.emit('getNewCode');
+    this.$socket.client.emit('getNewCode');
   }
 }
 </script>

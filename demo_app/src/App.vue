@@ -8,12 +8,11 @@
 
 <script lang="js">
     import Vue from "vue";
-    import VueSocketIO from 'vue-socket.io'
+    import VueSocketIOExt from 'vue-socket.io-extended';
+    import io from 'socket.io-client';
 
-    Vue.use(new VueSocketIO({
-        debug: false,
-        connection: process.env.VUE_APP_WS_BASE,
-    }));
+    const socket = io(process.env.VUE_APP_WS_BASE);
+    Vue.use(VueSocketIOExt, socket);
 
     export default Vue.extend({
         name: "App",
