@@ -48,7 +48,7 @@ export default class Swipe extends Vue {
     this.currentIndex++;
   }
 
-  protected mounted() {
+  protected beforeMount() {
     const catsImages = shuffle([
       "alexander.jpg",
       "bona.jpg",

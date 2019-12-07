@@ -135,7 +135,7 @@
 </template>
 <script>
     import {InteractEventBus, Vue2InteractDraggable} from "vue2-interact";
-    import {EventBus} from '../event-bus.js';
+    import {EventBus} from '@/event-bus';
 
     const EVENTS = {
         MATCH: "match",
