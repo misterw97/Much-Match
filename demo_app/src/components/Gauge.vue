@@ -1,13 +1,13 @@
 <template>
   <div class="margin-box">
     <div class="gauge-title">
-      {{title}}
-      <div class="information" v-if="!!description">i
-        <span class="tooltip-text">{{description}}</span>
+      {{ config.title }}
+      <div class="information" v-if="!!config.description">i
+        <span class="tooltip-text">{{ config.description }}</span>
       </div>
     </div>
     <div class="main-progress-bar-container">
-      <progress-bar :percent="value"/>
+      <progress-bar :percent="val"/>
       <div class="average-bar"></div>
     </div>
   </div>
@@ -17,12 +17,62 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import ProgressBar from "./ProgressBar.vue";
 
+    export interface GaugeStdRange {
+      mean: number,
+      std: number,
+    }
+  
+    export interface GaugeMinMaxRange {
+      min: number,
+      max: number,
+    }
+
+    export interface GaugeData {
+      title: string,
+      description?: string,
+      rangeMinMax?: GaugeMinMaxRange,
+      rangeStd?: GaugeStdRange,
+    }
+
     @Component({
-      components: {ProgressBar},
-      props: ['value', 'mean', 'std', 'title', 'description']
+      components: {ProgressBar}
     })
     export default class Gauge extends Vue {
 
+      @Prop()
+      private value!: number;
+      @Prop()
+      private config!: GaugeData;
+
+      private min = 0;
+      private max = 100;
+
+      protected beforeMount() {
+        console.log('value', this.value);
+        
+        if (!!this.config.rangeMinMax) {
+          this.min = this.config.rangeMinMax.min;
+          this.max = this.config.rangeMinMax.max;
+        } else if (!!this.config.rangeStd) {
+          // unorm std has 97% of all values between -3 and 3
+          this.min = -3;
+          this.max = 3;
+        }
+      }
+
+      private scaleValue(value: number): number {
+        const MIN = 0, MAX = 100;
+        const val = ((MAX-MIN)*(value-this.min))/(this.max-this.min) + MIN;
+        return val > MAX ? MAX : (val < MIN ? MIN : val);
+      }
+
+      get val() {
+        let value = this.value;
+        if (!!this.config.rangeStd) {
+          value = (value-this.config.rangeStd.mean)/this.config.rangeStd.std;
+        }
+        return this.scaleValue(value);
+      }
     }
 </script>
 
