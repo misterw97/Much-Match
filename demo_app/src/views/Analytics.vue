@@ -16,7 +16,7 @@
 
 <script>
     import Gauge from "@/components/Gauge";
-    import { EventBus } from "@/event-bus";
+    import {EventBus} from "@/event-bus";
     import extend from "@/utils/extend_features";
 
     export default {
@@ -25,6 +25,7 @@
         data() {
             return {
                 swipe: undefined,
+                rogerCounter: 0,
                 swipes: {},
                 series: [{
                     name: 'time',
@@ -88,7 +89,7 @@
                         tickAmount: 4,
                         floating: false,
                         title: {
-                           text: 'x movement'
+                            text: 'x movement'
                         },
                         seriesName: 'x movement',
                         labels: {
@@ -193,6 +194,7 @@
         methods: {
             renderData(data) {
                 this.swipe = undefined;
+                this.rogerCounter++;
                 const swipeId = data.t0;
                 const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
@@ -205,9 +207,10 @@
                 const currentSwipe = this.swipes[swipeId];
                 currentSwipe.push({x, y});
 
-                this.$refs.chart.updateSeries([
-                    ...Object.values(this.swipes).map(swipe => ({data: swipe}))
-                ])
+                if (this.rogerCounter % 2 === 0)
+                    this.$refs.chart.updateSeries([
+                        ...Object.values(this.swipes).map(swipe => ({data: swipe}))
+                    ])
             },
             renderEvent(swipeData) {
                 this.swipe = extend(swipeData);
