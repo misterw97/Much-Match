@@ -6,7 +6,7 @@
     <apexchart ref="chart" class="chart" :options="options" :series="series"/>
     <div class="features">
         <gauge class="gauge"
-            v-for="gauge in gauges" 
+            v-for="gauge in gauges"
             :key="gauge.name+(swipe?swipe.id:'')"
             :config="gauge.config"
             :value="!!swipe ? swipe[gauge.name] : 0" />
@@ -187,12 +187,16 @@
                 ]
             }
         },
-        mounted() {
-            EventBus.$on('swipe-event', swipeData => {
-                this.swipe = extend(swipeData);
-                this.swipes = {};
-            });
-            EventBus.$on('swipe-data', data => {
+        sockets: {
+            swipe_event(event) {
+                this.renderEvent(event);
+            },
+            swipe_data(data) {
+                this.renderData(data);
+            }
+        },
+        methods: {
+            renderData(data) {
                 this.swipe = undefined;
                 const swipeId = data.t0;
                 const x = data.timeStamp;
@@ -209,7 +213,15 @@
                 this.$refs.chart.updateSeries([
                     ...Object.values(this.swipes).map(swipe => ({data: swipe}))
                 ])
-            });
+            },
+            renderEvent(swipeData) {
+                this.swipe = extend(swipeData);
+                this.swipes = {};
+            }
+        },
+        mounted() {
+            EventBus.$on('swipe-event', swipeData => this.renderEvent(swipeData));
+            EventBus.$on('swipe-data', data => this.renderData(data));
         }
     }
 </script>
@@ -244,7 +256,7 @@
     }
 
     .chart {
-      width: 50%;
+      width: 75%;
       height: 200px;
       max-height: 200px;
     }

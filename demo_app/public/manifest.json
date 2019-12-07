@@ -1,0 +1,21 @@
+{
+  "short_name": "MuchMatch",
+  "name": "MuchMatch EPFL",
+  "icons": [
+    {
+      "src": "/demo/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/demo/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/demo/#swipe",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#FFFFFF"
+}

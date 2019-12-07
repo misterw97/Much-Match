@@ -12,14 +12,13 @@
         @reject="onreject"
       />
     </div>
-    <analytics class="analytics-view" />
+    <analytics class="analytics-view"/>
   </div>
 </template>
 
 <script>
 import SwipeableCards from "@/components/SwipeableCards.vue";
 import shuffle from "@/utils/shuffle";
-import router from "../router";
 import Analytics from "@/views/Analytics";
 
 export default {
@@ -28,12 +27,18 @@ export default {
       Analytics,
     SwipeableCards
   },
+  sockets: {
+      receiveNewCode(code) {
+          this.roomId = code;
+      },
+  },
   data() {
     return {
       cards: [],
       currentIndex: -1,
       dialog: false,
-      expected: false
+      expected: false,
+      roomId: null,
     };
   },
   methods: {
@@ -50,6 +55,7 @@ export default {
     }
   },
   mounted() {
+    this.$socket.emit('getNewCode');
     let cards = [
       {
         expectLike: true,

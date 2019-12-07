@@ -1,10 +1,13 @@
 <!-- freely inspired from: https://github.com/josephharveyangeles/kittynder/blob/master/LICENSE -->
 <template>
   <section class="container">
+    <div class="modal" :style="`visibility: ${roomId?'visible':'hidden'}`" v-on:click="roomId=null">
+      <p class="roomId-code">{{this.$parent.roomId}}</p>
+    </div>
     <div class="fixed header">
       <div class="header-row bottom-border">
         <div class="left">
-          <img :src="require('../assets/left-arrow.svg')">️
+          <img :src="require('../assets/left-arrow.svg')" v-on:click="showRoomId">️
         </div>
         <div class="right">
           <div class="has-badge">
@@ -117,10 +120,10 @@
           {{ helpLiked ? "right" : "left" }} of your screen until it disappears.
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider/>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="primary" text @click="helpDialog = false"
           >Let's swipe!
           </v-btn
@@ -146,6 +149,9 @@
         props: ["cards", "title"], // {src, name, age}
         data() {
             return {
+                roomId: null,
+                serverRoomId: null,
+                rogerCounter: 0,
                 cart: 0,
                 likes: 0,
                 isVisible: true,
@@ -196,7 +202,35 @@
                 return this.cards[this.index + 1];
             }
         },
+        sockets: {
+            swipe_event(swipeData) {
+                this.countCartLikes(swipeData.event)
+            }
+        },
         methods: {
+            showRoomId() {
+                const roomId = this.$parent.roomId;
+                if (roomId) {
+                    this.roomId = roomId;
+                } else {
+                    const userInput = prompt('Enter code');
+                    const serverRoomId = parseInt(userInput);
+                    this.$socket.emit('joinRoom', serverRoomId);
+                    this.serverRoomId = serverRoomId;
+                }
+
+            },
+            countCartLikes(event) {
+                switch (event) {
+                    case 'cart':
+                        this.cart++;
+                        event = 'match';
+                        break;
+                    case 'match':
+                        this.likes++;
+                        break;
+                }
+            },
             openhelper(liked) {
                 this.helpDialog = true;
                 this.helpLiked = liked;
@@ -216,18 +250,13 @@
                     image: this.cards[this.index].id,
                     appWidth: this.window.width,
                     appHeight: this.window.height,
-                    duration: endTime - this.swipeRelativeData.startTime
+                    duration: endTime - this.swipeRelativeData.startTime,
+                    event
                 };
-                switch (event) {
-                    case 'cart':
-                        this.cart++;
-                        event = 'match';
-                        break;
-                    case 'match':
-                        this.likes++;
-                        break;
-                }
                 const swipeData = {...meta, ...this.swipeData};
+                if (this.serverRoomId)
+                    this.$socket.emit('swipe_event', {to: this.serverRoomId, data: swipeData});
+                this.countCartLikes(event);
                 this.$emit(event, swipeData);
                 EventBus.$emit('swipe-event', swipeData);
                 this.swipeData = {
@@ -255,6 +284,18 @@
                 // eslint-disable-next-line no-console
                 // console.log(data);
                 EventBus.$emit('swipe-data', data);
+                this.rogerCounter++;
+                if (this.serverRoomId && this.rogerCounter % 10 === 0) {
+                    this.$socket.emit('swipe_data', {
+                        to: this.serverRoomId,
+                        data: {
+                            t0: data.t0,
+                            timeStamp: data.timeStamp,
+                            clientX: data.clientX,
+                            clientX0: data.clientX0,
+                        }
+                    });
+                }
 
                 this.swipeRelativeData.lastX += data.dx;
                 this.swipeRelativeData.lastY += data.dy;
@@ -283,6 +324,24 @@
     width: 100%;
     height: 100vh;
     position: relative;
+
+    .modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(18, 52, 85, 0.93);
+      width: 100%;
+      height: 100%;
+      color: white;
+      z-index: 99999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .roomId-code {
+        font-size: 3rem;
+      }
+    }
   }
 
   .has-badge {
