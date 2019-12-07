@@ -26,17 +26,10 @@ import Swipe from "@/models/Swipe";
 import { CHART_CONFIG } from "@/constants/chart.config";
 import { GAUGES } from "@/constants/kpi.config";
 import Gauge from "@/components/Gauge.vue";
+import {Socket} from "vue-socket.io-extended";
 
 @Component({
   components: { Gauge }
-  // sockets: {
-  //     swipe_event(event) {
-  //     this.renderEvent(event);
-  //     },
-  //     swipe_data(data) {
-  //     this.renderData(data);
-  //     }
-  // },
 })
 export default class Analytics extends Vue {
   public $refs!: Vue["$refs"] & {
@@ -85,6 +78,16 @@ export default class Analytics extends Vue {
       this.renderEvent(swipeData)
     );
     EventBus.$on("swipe-data", (data: any) => this.renderData(data));
+  }
+
+  @Socket()
+  swipe_data(data: any) {
+      this.renderData(data);
+  }
+
+  @Socket()
+  swipe_event(event: any) {
+      this.renderEvent(event);
   }
 }
 </script>
