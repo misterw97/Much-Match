@@ -1,10 +1,10 @@
 <template>
   <div class="margin-box">
     <div class="gauge-title">
-      {{ config.title }}
-      <div class="information" v-if="!!config.description">i
+      <b style="margin-right: 8px">{{ config.title }}</b> {{ config.description }}
+      <!-- <div class="information" v-if="!!config.description">i
         <span class="tooltip-text">{{ config.description }}</span>
-      </div>
+      </div> -->
     </div>
     <div class="main-progress-bar-container">
       <progress-bar :percent="val"/>
@@ -40,7 +40,7 @@
     export default class Gauge extends Vue {
 
       @Prop()
-      private value!: number;
+      private value?: number;
       @Prop()
       private config!: GaugeData;
 
@@ -48,15 +48,13 @@
       private max = 100;
 
       protected beforeMount() {
-        console.log('value', this.value);
-        
         if (!!this.config.rangeMinMax) {
           this.min = this.config.rangeMinMax.min;
           this.max = this.config.rangeMinMax.max;
         } else if (!!this.config.rangeStd) {
-          // unorm std has 97% of all values between -3 and 3
-          this.min = -3;
-          this.max = 3;
+          // unorm std has 95% of all values between -3 and 3
+          this.min = -2;
+          this.max = 2;
         }
       }
 
@@ -67,6 +65,9 @@
       }
 
       get val() {
+        if (!this.value) {
+          return 0;
+        }
         let value = this.value;
         if (!!this.config.rangeStd) {
           value = (value-this.config.rangeStd.mean)/this.config.rangeStd.std;

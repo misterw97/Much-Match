@@ -46,7 +46,6 @@ export default {
       this.next(data);
     },
     next(data) {
-      console.log(data);
       this.currentIndex++;
     }
   },

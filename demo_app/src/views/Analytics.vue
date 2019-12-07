@@ -127,8 +127,64 @@
                     config: {
                         title: "Determination",
                         description: "Average swiping speed",
+                        rangeStd: {
+                            mean: 2106.85661,
+                            std: 1216.818629,
+                        }
                     },
-                }]
+                }, {
+                    name: "speedMax",
+                    config: {
+                        title: "Pulsion",
+                        description: "Maximum swiping speed",
+                        rangeStd: {
+                            mean: 5360.130943,
+                            std: 7473.387816,
+                        }
+                    },
+                }, {
+                    name: "accMean",
+                    config: {
+                        title: "Intensity",
+                        description: "Average acceleration",
+                        rangeStd: {
+                            mean: 0,
+                            std: 1,
+                        }
+                    },
+                }, {
+                    name: "reactionTime",
+                    config: {
+                        title: "Reactivity",
+                        description: "Time spent on card before swiping",
+                        rangeStd: {
+                            mean: 0,
+                            std: 1,
+                        }
+                    },
+                }, {
+                    name: "normTrajLength",
+                    config: {
+                        title: "Insistence",
+                        description: "Swipe trajectory length",
+                        rangeStd: {
+                            mean: 0,
+                            std: 1,
+                        }
+                    },
+                },
+                // {
+                //     name: "TODO",
+                //     config: {
+                //         title: "Hesitation",
+                //         description: "Time with swiping speed at zero",
+                //         rangeStd: {
+                //             mean: 0,
+                //             std: 0,
+                //         }
+                //     },
+                // }
+                ]
             }
         },
         mounted() {
