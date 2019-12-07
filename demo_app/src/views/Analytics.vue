@@ -198,7 +198,7 @@
                 const x = data.timeStamp;
                 const y = data.clientX - data.clientX0;
                 if (Object.keys(this.swipes).length === 0)
-                    this.swipes[0] = [{x: x + 2000, y: 0}];
+                    this.swipes[0] = [{x: x + 1000, y: 0}];
 
                 if (!this.swipes[swipeId])
                     this.swipes[swipeId] = [];
