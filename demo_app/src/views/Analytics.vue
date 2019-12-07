@@ -134,7 +134,6 @@
         mounted() {
             EventBus.$on('swipe-event', swipeData => {
                 this.swipe = extend(swipeData);
-                console.log(this.swipe["speedMean"]);
                 this.swipes = {};
             });
             EventBus.$on('swipe-data', data => {
