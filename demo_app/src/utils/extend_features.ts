@@ -34,9 +34,7 @@ const computeSpeedMax = (swipe: Swipe): number => {
     return speeds.reduce((max, val) => val > max ? val : max, speeds[0]);
 }
 
-export default function (swipe: Swipe): SwipeExtended {
-    console.log(swipe);
-    
+export default function (swipe: Swipe): SwipeExtended {    
     return {
         ...swipe,
         speedMean: computeSpeedMean(swipe),
