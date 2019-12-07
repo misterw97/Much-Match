@@ -3,7 +3,7 @@
     <div class="cache"></div>
     <h1>Analytics</h1>
     <img :src="require('../assets/logo_cut.png')" class="logo">
-    <apexchart ref="chart" class="chart" :options="options" :series="series"/>
+    <apexchart height="300px" ref="chart" class="chart" :options="options" :series="series"/>
     <div class="features">
         <gauge class="gauge"
             v-for="gauge in gauges"
@@ -61,7 +61,6 @@
                         toolbar: {
                             show: false,
                         },
-                        height: '200px',
                         type: 'area',
                     },
                     colors: ['#ff6900'],
@@ -251,12 +250,6 @@
       top: 10px;
       z-index: 1020;
       right: 20px;
-    }
-
-    .chart {
-      width: 75%;
-      height: 200px;
-      max-height: 200px;
     }
 
     .features {
