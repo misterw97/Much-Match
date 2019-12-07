@@ -3,12 +3,12 @@
   "name": "MuchMatch EPFL",
   "icons": [
     {
-      "src": "/demo/192.png",
+      "src": "192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/demo/512.png",
+      "src": "512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
