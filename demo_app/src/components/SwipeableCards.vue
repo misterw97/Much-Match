@@ -102,35 +102,6 @@
         <i class="material-icons">favorite</i>
       </div>
     </div>
-
-    <v-dialog v-model="helpDialog" width="500">
-      <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title
-        >Heyy!
-        </v-card-title
-        >
-
-        <v-card-text>
-          <br/>The idea here is to collect data on swiping features...
-          therefore you should not use the buttons to indicate your preference!
-          <br/>
-          <br/>
-          You {{ helpLiked ? "liked" : "didn't like" }} this picture? Just press
-          your finger on the card and drag it to the
-          {{ helpLiked ? "right" : "left" }} of your screen until it disappears.
-        </v-card-text>
-
-        <v-divider/>
-
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn color="primary" text @click="helpDialog = false"
-          >Let's swipe!
-          </v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </section>
 </template>
 <script>
