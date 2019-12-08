@@ -1,8 +1,9 @@
 <template>
   <div class="margin-box">
-    <div class="gauge-title">
-      <b style="margin-right: 8px">{{ config.title }}</b>
-      {{ config.description }}
+    <div class="gauge-description">
+      <span class="gauge-title" style="margin-right: 8px">{{ config.title }}</span>
+      <span>{{ config.description }}</span>
+      <i v-if="outlier" class="material-icons primary--text">star</i>
       <!-- <div class="information" v-if="!!config.description">i
         <span class="tooltip-text">{{ config.description }}</span>
       </div>-->
@@ -19,6 +20,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import ProgressBar from "./ProgressBar.vue";
 import { GaugeData } from "@/models/GaugeData";
 
+const STD_THRESHOLD = 2; //95%
+
 @Component({
   components: { ProgressBar }
 })
@@ -31,14 +34,16 @@ export default class Gauge extends Vue {
   private min = 0;
   private max = 100;
 
+  private outlier = false;
+
   protected beforeMount() {
     if (!!this.config.rangeMinMax) {
       this.min = this.config.rangeMinMax.min;
       this.max = this.config.rangeMinMax.max;
     } else if (!!this.config.rangeStd) {
       // unorm std has 95% of all values between -3 and 3
-      this.min = -2;
-      this.max = 2;
+      this.min = -STD_THRESHOLD;
+      this.max = STD_THRESHOLD;
     }
   }
 
@@ -57,6 +62,11 @@ export default class Gauge extends Vue {
     let value = this.value;
     if (!!this.config.rangeStd) {
       value = (value - this.config.rangeStd.mean) / this.config.rangeStd.std;
+      if (Math.abs(value) > STD_THRESHOLD) {
+        this.outlier = true;
+      } else {
+        this.outlier = false;
+      }
     }
     return this.scaleValue(value);
   }
@@ -71,9 +81,18 @@ $bar-extra-height: 4px;
   margin-bottom: 20px;
 }
 
-.gauge-title {
+.gauge-description {
   display: flex;
   margin-bottom: 10px;
+
+  i {
+    margin-left: 8px;
+    font-size: 1.4em;
+  }
+
+  .gauge-title {
+    font-weight: bold;
+  }
 
   .information {
     background-color: #c0c0c0;
