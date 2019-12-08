@@ -45,22 +45,25 @@ export default class Swipe extends Vue {
   }
 
   protected beforeMount() {
-    const catsImages = shuffle([
-      "alexander.jpg",
-      "bona.jpg",
-      "ichi.jpg",
-      "karina.jpg",
-      "lloyd.jpg",
-      "luiza.jpg",
-      "max.jpg",
-      "mona.jpg",
-      "naru.jpg",
-      "ramdan.jpg",
-      "tucker.jpg",
-      "uriel.jpg",
-      "zoe.jpg"
-    ]);
-    this.cards = catsImages.map(src => ({ src }));
+    // const catsImages = shuffle([
+    //   "alexander.jpg",
+    //   "bona.jpg",
+    //   "ichi.jpg",
+    //   "karina.jpg",
+    //   "lloyd.jpg",
+    //   "luiza.jpg",
+    //   "max.jpg",
+    //   "mona.jpg",
+    //   "naru.jpg",
+    //   "ramdan.jpg",
+    //   "tucker.jpg",
+    //   "uriel.jpg",
+    //   "zoe.jpg"
+    // ]);
+    const watchImages: string[] = Array(9).fill(0).map((_: undefined, i: number) => `watch${i}.jpg`);
+    this.cards = watchImages.map(src => ({ src }));
+    console.log(this.cards);
+    
   }
 }
 </script>
