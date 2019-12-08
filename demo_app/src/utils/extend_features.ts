@@ -10,7 +10,7 @@ const diffArray = (array: number[]): number[] => {
 };
 
 const absArray = (array: number[]): number[] =>
-  array.map(val => (val < 0 ? -val : val));
+  array.map(val => Math.abs(val));
 
 const sumAbsArray = (array: number[]): number => {
   return sumArray(absArray(array));
