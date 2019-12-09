@@ -57,6 +57,7 @@ export default class Gauge extends Vue {
 
   get val() {
     if (!this.value) {
+      this.outlier = false;
       return 0;
     }
     let value = this.value;
