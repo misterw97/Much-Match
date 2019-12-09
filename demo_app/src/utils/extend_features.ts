@@ -14,6 +14,11 @@ const maxArray = (array: number[]): number => {
   return array.reduce((max, val) => (val > max ? val : max), array[0]);
 };
 
+const meanArray = (array: number[]): number => {
+  if (array.length === 0) return 0;
+  return sumArray(array) / array.length;
+};
+
 const absArray = (array: number[]): number[] =>
   array.map(val => Math.abs(val));
 
@@ -22,9 +27,7 @@ const sumAbsArray = (array: number[]): number => {
 };
 
 const computeSpeedMean = (swipe: Swipe): number => {
-  const speeds = swipe.rawSpeed;
-  if (speeds.length === 0) return 0;
-  return sumArray(speeds) / speeds.length;
+  return meanArray(swipe.rawSpeed);
 };
 
 const computeAcceleration = (swipe: Swipe): number[] => {
@@ -35,8 +38,7 @@ const computeAcceleration = (swipe: Swipe): number[] => {
 };
 
 const computeAccelerationMean = (accs: number[]): number => {
-  if (accs.length === 0) return 0;
-  return sumArray(accs) / accs.length;
+  return meanArray(accs);
 };
 
 const computeAccelerationMax = (accs: number[]): number => {
