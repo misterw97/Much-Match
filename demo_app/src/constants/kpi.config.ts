@@ -11,35 +11,35 @@ export const GAUGES = [
     }
   },
   {
-    name: "speedMax",
+    name: "hesitation",
     config: {
-      title: "Pulsion",
-      description: "Maximum swiping speed",
+      title: "Hesitation",
+      description: "Time with swiping speed at zero",
       rangeStd: {
-        mean: 5360.130943,
-        std: 7473.387816
+        mean: 4.824155,
+        std: 8.624324
       }
     }
   },
+  // {
+  //   name: "accMean",
+  //   config: {
+  //     title: "Intensity",
+  //     description: "Average acceleration",
+  //     rangeStd: {
+  //       mean: 11.725722,
+  //       std: 174.36487
+  //     }
+  //   }
+  // },
   {
-    name: "accMean",
+    name: "accMax",
     config: {
       title: "Intensity",
-      description: "Average acceleration",
+      description: "Maximum acceleration",
       rangeStd: {
-        mean: 11.725722,
-        std: 174.36487
-      }
-    }
-  },
-  {
-    name: "reactionTime",
-    config: {
-      title: "Reactivity",
-      description: "Time spent on card before swiping",
-      rangeStd: {
-        mean: 7476.705882,
-        std: 163453.821581
+        mean: 440.558247,
+        std: 2099.491071
       }
     }
   },
@@ -55,13 +55,24 @@ export const GAUGES = [
     }
   },
   {
-    name: "hesitation",
+    name: "reactionTime",
     config: {
-      title: "Hesitation",
-      description: "Time with swiping speed at zero",
+      title: "Reactivity",
+      description: "Time spent on card before swiping",
       rangeStd: {
-        mean: 4.824155,
-        std: 8.624324
+        mean: 7476.705882,
+        std: 163453.821581
+      }
+    }
+  },
+  {
+    name: "speedMax",
+    config: {
+      title: "Pulsion",
+      description: "Maximum swiping speed",
+      rangeStd: {
+        mean: 5360.130943,
+        std: 7473.387816
       }
     }
   }

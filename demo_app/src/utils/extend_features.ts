@@ -9,6 +9,11 @@ const diffArray = (array: number[]): number[] => {
   return array.slice(1).map((val, i) => val - array[i]);
 };
 
+const maxArray = (array: number[]): number => {
+  if (array.length === 0) return 0;
+  return array.reduce((max, val) => (val > max ? val : max), array[0]);
+};
+
 const absArray = (array: number[]): number[] =>
   array.map(val => Math.abs(val));
 
@@ -34,10 +39,12 @@ const computeAccelerationMean = (accs: number[]): number => {
   return sumArray(accs) / accs.length;
 };
 
+const computeAccelerationMax = (accs: number[]): number => {
+  return maxArray(accs);
+};
+
 const computeSpeedMax = (swipe: Swipe): number => {
-  const speeds = swipe.rawSpeed;
-  if (speeds.length === 0) return 0;
-  return speeds.reduce((max, val) => (val > max ? val : max), speeds[0]);
+  return maxArray(swipe.rawSpeed);
 };
 
 const computeReactionTime = (swipe: Swipe): number => {
@@ -70,6 +77,7 @@ export default function(swipe: Swipe): SwipeExtended {
     speedMean: computeSpeedMean(swipe),
     speedMax: computeSpeedMax(swipe),
     accMean: computeAccelerationMean(accs),
+    accMax: computeAccelerationMax(accs),
     reactionTime: computeReactionTime(swipe),
     normTrajLength: computePathLength(swipe),
     hesitation: computeHesitation(accs)
