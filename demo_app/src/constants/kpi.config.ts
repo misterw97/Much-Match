@@ -68,7 +68,7 @@ export const GAUGES = [
   {
     name: "speedMax",
     config: {
-      title: "Pulsion",
+      title: "Impulsiveness",
       description: "Maximum swiping speed",
       rangeStd: {
         mean: 5360.130943,
