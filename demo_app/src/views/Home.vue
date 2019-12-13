@@ -1,10 +1,11 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
-      <notification-center />
+      <notification-center v-if="displayNotifications" />
       <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
+        @filtered="onFilter"
       />
     </div>
     <analytics class="analytics-view"/>
@@ -29,10 +30,15 @@ import NotificationCenter from "@/components/NotificationCenter.vue";
 export default class Home extends Swiping {
 
   protected roomId?: number;
+  protected displayNotifications = false;
 
   @Socket()
   receiveNewCode(code: number) {
       this.roomId = code;
+  }
+
+  protected onFilter() {
+    this.displayNotifications = !this.displayNotifications;
   }
 
   mounted() {

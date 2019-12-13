@@ -61,14 +61,17 @@ export default class Analytics extends Vue {
     const determinationScore = this.scores["speedMean"] as
       | GaugeScore
       | undefined;
-    const intensityScore = this.scores["accMax"] as GaugeScore | undefined;
+    const intensityScore = this.scores["speedMax"] as GaugeScore | undefined;
+    const reactionTimeScore = this.scores["reactionTime"] as GaugeScore | undefined;
+    // const intensityScore = this.scores["accMax"] as GaugeScore | undefined;
     // guard: quit if not all scores are computed yet
-    if (!hesitationScore || !determinationScore || !intensityScore) return;
+    if (!hesitationScore || !determinationScore || !intensityScore || !reactionTimeScore) return;
     // notify if scores does match hesitation and no determination
     const hesitant = !!hesitationScore.outlier && hesitationScore.value > 0;
     const notDetermined =
       (!determinationScore.outlier || determinationScore.value === 0) &&
-      (!intensityScore.outlier || intensityScore.value === 0);
+      (!intensityScore.outlier || intensityScore.value === 0) &&
+      (!reactionTimeScore.outlier || reactionTimeScore.value === 0);
     if (hesitant && notDetermined) {
       EventBus.$emit("notification", HESITANT_10);
       const roomId = (this.$parent as any).roomId;

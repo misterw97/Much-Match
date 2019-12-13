@@ -3,11 +3,11 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
-      <notification-center />
+      <notification-center v-if="displayNotifications" />
       <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
-        @connected="onConnect"
+        @filtered="onFilter"
       />
     </div>
   </div>
@@ -36,6 +36,7 @@ import NotificationCenter from "@/components/NotificationCenter.vue";
 export default class Swipe extends Vue {
   protected cards: CardData[] = [];
   private currentIndex = 0;
+  protected displayNotifications = false;
 
   protected onmatch(data: ISwipe) {
     data.liked = true;
@@ -53,7 +54,11 @@ export default class Swipe extends Vue {
 
   protected beforeMount() {
     const watchImages: string[] = Array(9).fill(0).map((_: undefined, i: number) => `watch${i}.jpg`);
-    this.cards = watchImages.map(src => ({ src }));
+    this.cards = shuffle(watchImages).map(src => ({ src }));
+  }
+
+  protected onFilter() {
+    this.displayNotifications = !this.displayNotifications;
   }
 
   @Socket()
