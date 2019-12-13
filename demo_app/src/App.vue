@@ -2,7 +2,6 @@
   <v-app>
     <v-content>
       <router-view/>
-      <notification-center />
     </v-content>
   </v-app>
 </template>
@@ -11,14 +10,13 @@
     import Vue from "vue";
     import VueSocketIOExt from 'vue-socket.io-extended';
     import io from 'socket.io-client';
-    import NotificationCenter from "@/components/NotificationCenter";
 
     const socket = io(process.env.VUE_APP_WS_BASE);
     Vue.use(VueSocketIOExt, socket);
 
     export default Vue.extend({
         name: "App",
-        components: {NotificationCenter},
+        components: {},
         sockets: {
             connect: function () {
                 console.log('socket connected')

@@ -210,6 +210,7 @@
                     const serverRoomId = parseInt(userInput);
                     this.$socket.client.emit('joinRoom', serverRoomId);
                     this.serverRoomId = serverRoomId;
+                    this.$emit('connected', serverRoomId);
                 }
 
             },

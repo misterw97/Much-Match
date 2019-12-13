@@ -3,9 +3,11 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
+      <notification-center />
       <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
+        @connected="onConnect"
       />
     </div>
   </div>
@@ -18,12 +20,17 @@ import ISwipe from "@/models/Swipe";
 import shuffle from "@/utils/shuffle";
 import SwipeableCards from "@/components/SwipeableCards.vue";
 import Analytics from "@/views/Analytics.vue";
+import { Socket } from "vue-socket.io-extended";
+import { EventBus } from "@/event-bus";
+import { HESITANT_10 } from "@/constants/notifications";
+import NotificationCenter from "@/components/NotificationCenter.vue";
 
 @Component({
   name: "swipe",
   components: {
     Analytics,
-    SwipeableCards
+    SwipeableCards,
+    NotificationCenter,
   }
 })
 export default class Swipe extends Vue {
@@ -45,25 +52,13 @@ export default class Swipe extends Vue {
   }
 
   protected beforeMount() {
-    // const catsImages = shuffle([
-    //   "alexander.jpg",
-    //   "bona.jpg",
-    //   "ichi.jpg",
-    //   "karina.jpg",
-    //   "lloyd.jpg",
-    //   "luiza.jpg",
-    //   "max.jpg",
-    //   "mona.jpg",
-    //   "naru.jpg",
-    //   "ramdan.jpg",
-    //   "tucker.jpg",
-    //   "uriel.jpg",
-    //   "zoe.jpg"
-    // ]);
     const watchImages: string[] = Array(9).fill(0).map((_: undefined, i: number) => `watch${i}.jpg`);
     this.cards = watchImages.map(src => ({ src }));
-    console.log(this.cards);
-    
+  }
+
+  @Socket()
+  notify(data: any) {
+    EventBus.$emit("notification", HESITANT_10);
   }
 }
 </script>

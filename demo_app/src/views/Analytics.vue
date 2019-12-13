@@ -26,6 +26,7 @@ import { GaugeData, GaugeScore } from "@/models/GaugeData";
 import Swipe from "@/models/Swipe";
 import { CHART_CONFIG } from "@/constants/chart.config";
 import { GAUGES } from "@/constants/kpi.config";
+import { HESITANT_10 } from "@/constants/notifications";
 import Gauge from "@/components/Gauge.vue";
 import { Socket } from "vue-socket.io-extended";
 
@@ -69,26 +70,9 @@ export default class Analytics extends Vue {
       (!determinationScore.outlier || determinationScore.value === 0) &&
       (!intensityScore.outlier || intensityScore.value === 0);
     if (hesitant && notDetermined) {
-      EventBus.$emit("notification", {
-        title: "Sure?",
-        description:
-          "You looked hesitant... we offer you 10% on this very special article!\nIf it helps you make your choice ;-)",
-        actions: [
-          {
-            title: "I don't want it",
-            callback: () => {
-              EventBus.$emit("dismiss-notification");
-            }
-          },
-          {
-            title: "Get 10% off!",
-            callback: () => {
-              EventBus.$emit("increment-cart");
-              EventBus.$emit("dismiss-notification");
-            }
-          },
-        ]
-      });
+      EventBus.$emit("notification", HESITANT_10);
+      const roomId = (this.$parent as any).roomId;
+      if (roomId) this.$socket.client.emit('notify', {to: roomId, data: undefined});
     }
   }
 

@@ -1,6 +1,7 @@
 <template>
   <div class="two-columns">
     <div class="swipe-view">
+      <notification-center />
       <swipeable-cards :cards="cards"
         @match="onmatch"
         @reject="onreject"
@@ -16,11 +17,13 @@ import SwipeableCards from "@/components/SwipeableCards.vue";
 import Swiping from "@/views/Swiping.vue";
 import Analytics from "@/views/Analytics.vue";
 import {Socket} from "vue-socket.io-extended";
+import NotificationCenter from "@/components/NotificationCenter.vue";
 
 @Component({
   components: {
     Analytics,
     SwipeableCards,
+    NotificationCenter,
   }
 })
 export default class Home extends Swiping {

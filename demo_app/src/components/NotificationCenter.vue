@@ -30,8 +30,8 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: 50vh;
-    z-index: 3;
+    width: 100%;
+    z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;

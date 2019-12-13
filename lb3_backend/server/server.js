@@ -34,9 +34,14 @@ boot(app, __dirname, (err) => {
       console.log('a user connected');
 
       socket.on('getNewCode', () => {
-        const roomId = randomNumber(100000, 999999);
+        const roomId = randomNumber(100, 999);
         socket.emit('receiveNewCode', roomId);
         socket.join(roomId);
+      });
+
+      socket.on('notify', (req) => {
+        const {to, data} = req;
+        socket.to(to).emit('notify', data);
       });
 
       socket.on('swipe_event', (req) => {
