@@ -27,7 +27,7 @@
           <img :src="require('../assets/swipe.svg')" class="swipe-icon">
         </div>
         <div class="right">
-          <span class="bold">FILTER</span>
+          <span class="bold" v-on:click="() => sendNotification()">FILTER</span>
         </div>
       </div>
     </div>
@@ -179,6 +179,27 @@
             }
         },
         methods: {
+            sendNotification() {
+                EventBus.$emit('notification',  {
+                    title: 'Title',
+                    description: 'Description',
+                    actions: [
+                        {
+                            title: 'Ok',
+                            callback: () => {
+                                console.log('ok');
+                                EventBus.$emit('dismiss-notification');
+                            }
+                        }, {
+                            title: 'Cancel',
+                            callback: () => {
+                                console.log('cancel');
+                                EventBus.$emit('dismiss-notification');
+                            }
+                        }
+                    ]
+                })
+            },
             showRoomId() {
                 const roomId = this.$parent.roomId;
                 if (roomId) {
