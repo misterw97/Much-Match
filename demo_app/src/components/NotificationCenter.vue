@@ -30,7 +30,7 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: calc(50vh - 21px);
+    width: 50vh;
     z-index: 3;
     display: flex;
     justify-content: center;
