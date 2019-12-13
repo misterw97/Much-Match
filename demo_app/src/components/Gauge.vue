@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ProgressBar from "./ProgressBar.vue";
-import { GaugeData } from "@/models/GaugeData";
+import { GaugeData, GaugeScore } from "@/models/GaugeData";
 
 const STD_THRESHOLD = 2; //95%
 
@@ -68,8 +68,13 @@ export default class Gauge extends Vue {
       } else {
         this.outlier = false;
       }
+      value = this.scaleValue(value);
+      this.$emit("scored", {
+        value,
+        outlier: this.outlier
+      } as GaugeScore);
     }
-    return this.scaleValue(value);
+    return value;
   }
 }
 </script>

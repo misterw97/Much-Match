@@ -28,6 +28,7 @@
     background-color: white;
     border-radius: $radius;
     min-width: 40vh;
+    margin: 16px;
 
     .notification-actual-content {
       padding: 30px;

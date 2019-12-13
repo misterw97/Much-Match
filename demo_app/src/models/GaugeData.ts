@@ -14,3 +14,8 @@ export interface GaugeData {
   rangeMinMax?: GaugeMinMaxRange;
   rangeStd?: GaugeStdRange;
 }
+
+export interface GaugeScore {
+  value: number;
+  outlier?: boolean;
+}

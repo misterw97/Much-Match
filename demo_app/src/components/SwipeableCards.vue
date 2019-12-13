@@ -157,6 +157,7 @@
         },
         mounted() {
             this.swipeRelativeData.startTime = new Date().getTime();
+            EventBus.$on('increment-cart', () => this.cart++);
         },
         created() {
             window.addEventListener("resize", this.handleResize);

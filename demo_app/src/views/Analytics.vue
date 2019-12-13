@@ -11,6 +11,7 @@
         :key="gauge.name+(!!swipe ? swipe.id:'')"
         :config="gauge.config"
         :value="!!swipe ? swipe[gauge.name] : 0"
+        @scored="onScore($event, gauge.name)"
       />
     </div>
   </div>
@@ -21,12 +22,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { EventBus } from "@/event-bus";
 import extend from "@/utils/extend_features";
 import SwipeExtended from "@/models/SwipeExtended";
-import { GaugeData } from "@/models/GaugeData";
+import { GaugeData, GaugeScore } from "@/models/GaugeData";
 import Swipe from "@/models/Swipe";
 import { CHART_CONFIG } from "@/constants/chart.config";
 import { GAUGES } from "@/constants/kpi.config";
 import Gauge from "@/components/Gauge.vue";
-import {Socket} from "vue-socket.io-extended";
+import { Socket } from "vue-socket.io-extended";
 
 @Component({
   components: { Gauge }
@@ -36,6 +37,7 @@ export default class Analytics extends Vue {
     gauge: Gauge;
   };
 
+  protected scores: any;
   protected swipe: SwipeExtended = {} as SwipeExtended;
   protected rogerCounter: number = 0;
   protected swipes: any = {};
@@ -48,8 +50,51 @@ export default class Analytics extends Vue {
   protected options = CHART_CONFIG;
   protected gauges: { name: string; config: GaugeData }[] = GAUGES;
 
+  protected onScore(score: GaugeScore, name: string) {
+    this.scores[name] = score;
+    this.pushAdIfHesitant();
+  }
+
+  protected pushAdIfHesitant() {
+    const hesitationScore = this.scores["hesitation"] as GaugeScore | undefined;
+    const determinationScore = this.scores["speedMean"] as
+      | GaugeScore
+      | undefined;
+    const intensityScore = this.scores["accMax"] as GaugeScore | undefined;
+    // guard: quit if not all scores are computed yet
+    if (!hesitationScore || !determinationScore || !intensityScore) return;
+    // notify if scores does match hesitation and no determination
+    const hesitant = !!hesitationScore.outlier && hesitationScore.value > 0;
+    const notDetermined =
+      (!determinationScore.outlier || determinationScore.value === 0) &&
+      (!intensityScore.outlier || intensityScore.value === 0);
+    if (hesitant && notDetermined) {
+      EventBus.$emit("notification", {
+        title: "Sure?",
+        description:
+          "You looked hesitant... we offer you 10% on this very special article!\nIf it helps you make your choice ;-)",
+        actions: [
+          {
+            title: "I don't want it",
+            callback: () => {
+              EventBus.$emit("dismiss-notification");
+            }
+          },
+          {
+            title: "Get 10% off!",
+            callback: () => {
+              EventBus.$emit("increment-cart");
+              EventBus.$emit("dismiss-notification");
+            }
+          },
+        ]
+      });
+    }
+  }
+
   protected renderData(data: any) {
     this.swipe = {} as SwipeExtended;
+    this.scores = {};
     this.rogerCounter++;
     const swipeId = data.t0;
     const x = data.timeStamp;
@@ -82,12 +127,12 @@ export default class Analytics extends Vue {
 
   @Socket()
   swipe_data(data: any) {
-      this.renderData(data);
+    this.renderData(data);
   }
 
   @Socket()
   swipe_event(event: any) {
-      this.renderEvent(event);
+    this.renderEvent(event);
   }
 }
 </script>
