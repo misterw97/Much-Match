@@ -1,6 +1,6 @@
 # MuchMatch: Swipe it right!
 
-## Abtract
+## Abstract
 The near-unlimited choice of items presented in online stores leads users on journeys of untargeted and unsatisfying scrolling through bottomless pages on the search for products they really like.
 
 With Much-Match, we introduce a totally **new**, **intuitive** and **fun way** of **browsing shopping catalogues**, leveraging a familiar technology: **swiping**. The backend algorithm of Much-Match continuously analyses what users swipe left and right and **how they swipe it**, creating a user profile that allows for meaningful and targeted suggestions.    
